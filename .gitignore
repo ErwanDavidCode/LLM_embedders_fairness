@@ -1,0 +1,5 @@
+# Dossiers typiques
+__pycache__/
+# models/
+# Data/embeddings/
+# venv

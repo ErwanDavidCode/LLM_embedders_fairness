@@ -1,0 +1,17 @@
+{
+    "MPNet": "../../models/models--sentence-transformers--all-mpnet-base-v2",
+    "MiniLM-L12": "../../models/models--sentence-transformers--all-MiniLM-L12-v2",
+    "DistilRoBERTa": "../../models/models--sentence-transformers--all-distilroberta-v1",
+    "MiniLM-L12-paraphrase": "../../models/models--sentence-transformers--paraphrase-MiniLM-L12-v2",
+    "MiniLM-L12-multilingual": "../../models/models--sentence-transformers--paraphrase-multilingual-MiniLM-L12-v2",
+    "DistilRoBERTa-paraphrase": "../../models/models--sentence-transformers--paraphrase-distilroberta-base-v1",
+    "MPNet-paraphrase": "../../models/models--sentence-transformers--paraphrase-mpnet-base-v2",
+    "e5-large-v2": "../../models/models--intfloat--e5-large-v2",
+    "stella-base-en-v2": "../../models/models--infgrad--stella-base-en-v2",
+    "UAE-Large-V1": "../../models/models--WhereIsAI--UAE-Large-V1",
+    "gte-large": "../../models/models--thenlper--gte-large",
+    "sup-simcse-bert-base": "../../models/models--princeton-nlp--sup-simcse-bert-base-uncased",
+    "ember-v1": "../../models/models--llmrails--ember-v1",
+    "bert-base-nli-mean-tokens": "../../models/models--sentence-transformers--bert-base-nli-mean-tokens",
+    "distilbert-base-nli-stsb-mean-tokens": "../../models/models--sentence-transformers--distilbert-base-nli-stsb-mean-tokens"
+}
