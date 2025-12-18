@@ -41,7 +41,7 @@ This project is optimized to run on **GPU clusters** (like Compute Canada). For 
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/ErwanDavidCode/LLM_embedders_fairness.git
 cd LLM_embedders_fairness/main
 ```
 
