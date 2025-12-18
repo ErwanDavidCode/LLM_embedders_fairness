@@ -1,6 +1,6 @@
 # LLM Embedders Fairness Analysis
 
-A comprehensive research project investigating fairness properties of large language model (LLM) embeddings across multiple embedding techniques and datasets. This pipeline analyzes bias and fairness metrics in embeddings generated from tabular and text-based data.
+A comprehensive research project investigating fairness properties of large language model (LLM) embeddings across multiple embedding techniques and datasets. This pipeline analyzes bias and fairness metrics in embeddings generated from tabular to text-based data.
 
 **📄 Full Technical Report:** [Stage Report PDF](./End_of_master_intership_repport__reworked.pdf) *(Download and read for detailed methodology and findings)*
 
@@ -12,6 +12,7 @@ A comprehensive research project investigating fairness properties of large lang
 - [Prerequisites & Setup](#-prerequisites--setup)
 - [Project Architecture](#-project-architecture)
 - [Pipeline Workflow](#-pipeline-workflow)
+- [Main Script Parameters (Detailed)](#-main-script-parameters-detailed)
 - [Note](#-note)
 
 ---
@@ -118,7 +119,7 @@ LLM_embedders_fairness/
 │               ├── MiniLM-L12.csv
 │               └── ... (one CSV per model)
 │
-├── models/                             # Pre-trained embedding models 
+├── models/                             # Pre-trained embedding models (to be downloaded here)
 │   ├── models--sentence-transformers--all-mpnet-base-v2/
 │   ├── models--sentence-transformers--all-MiniLM-L12-v2/
 │   ├── models--intfloat--e5-large-v2/
@@ -301,8 +302,75 @@ Output: __results/seed{seed}/K{K}/correlations/
         Files: correlation_results.csv, plots_*.png
 ```
 
+---
 
+## ⚙️ Main Script Parameters (Detailed)
 
+### **Main Loop: Seeds × K Values** (Lines 47-48)
+
+#### **Random Seeds** (`seeds`)
+
+- **Purpose**: Run multiple experiments with different random initializations
+- **Current**: `(1)` → single run
+- **Expand for robustness**: `(1 2 3 4 5)` → 5 independent runs
+- **Impact**: Multiplies total execution time by number of seeds
+
+#### **K Values** (`K_values`) ⭐ **CRITICAL**
+
+This is the **most important parameter**. Controls how fairness is grouped/measured.
+
+**Option A: Numeric K (Unsupervised Clustering)**
+
+```bash
+K_values=(2 4 8 16)  # Will cluster into 2, 4, 8, or 16 groups
+```
+
+- **Triggers**: K-means clustering (Step 2)
+- **Use when**: Sensitive attributes are unknown or for additional studies
+- **Execution time**: Increases with K (more clusters = more computation)
+
+**Option B: Sensitive Attribute Names (Supervised)**
+
+```bash
+K_values=("SEX_RAC1P")              # Group by SEX and RACE (known attributes)
+K_values=("SEX")                    # Group by SEX only
+K_values=("AGEP")                   # Group by AGE
+K_values=("SEX_RAC1P" "SEX" "AGEP") # All three attributes
+etc...
+```
+
+- **Triggers**: No clustering (Step 2 skipped)
+- **Use when**: Sensitive attributes in dataset
+- **Attributes in ACS data**:
+  - `SEX`: Gender (Male/Female)
+  - `RAC1P`: Race (White/Non-white)
+  - `AGEP`: Age (Young/old)
+
+**Option C: ISDarrin (Blind Fairness)**
+
+```bash
+K_values=("ISDarrin")  # Standard IS without attribute knowledge
+```
+
+- **Triggers**: Special ISDarrin scoring (no clustering, no sensitive attrs needed)
+- **Use when**: --
+
+**Recommended configurations:**
+```bash
+# Option 1: Quick test (numeric K)
+K_values=(4)
+
+# Option 2: Comprehensive unsupervised
+K_values=(2 4 8 16 32)
+
+# Option 3: Supervised (recommended for ACS data)
+K_values=("SEX_RAC1P" "SEX" "AGEP")
+
+# Option 4: Comparison
+K_values=(4 "SEX" "ISDarrin")
+```
+
+---
 
 ## 📝 Note
 
